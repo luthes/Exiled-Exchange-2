@@ -31,20 +31,22 @@ export function likelyFinishedItem(item: ParsedItem) {
 
 export function hasCraftingValue(item: ParsedItem) {
   return (
+    itemIsModifiable(item) &&
     // Base useful crafting item (synth and influence not in poe2 yet though)
-    item.isSynthesised ||
-    item.isFractured ||
-    item.influences.length ||
-    // Clusters (deprecated)
-    item.category === ItemCategory.ClusterJewel ||
-    // Jewels
-    (item.category === ItemCategory.Jewel &&
-      item.rarity === ItemRarity.Magic) ||
-    // High ilvl (minus 3 for now, since seems like we churn through items an stock is low)
-    item.itemLevel! >= maxUsefulItemLevel(item.category) - 3 ||
-    // is exceptional item
-    (item.runeSockets && item.runeSockets.current > item.runeSockets.normal) ||
-    (item.quality && item.quality > 20)
+    (item.isSynthesised ||
+      item.isFractured ||
+      item.influences.length ||
+      // Clusters (deprecated)
+      item.category === ItemCategory.ClusterJewel ||
+      // Jewels
+      (item.category === ItemCategory.Jewel &&
+        item.rarity === ItemRarity.Magic) ||
+      // High ilvl (minus 15, seems like low ilevel ones still kinda sell?)
+      item.itemLevel! >= maxUsefulItemLevel(item.category) - 15 ||
+      // is exceptional item
+      (item.runeSockets &&
+        item.runeSockets.current > item.runeSockets.normal) ||
+      (item.quality && item.quality > 20))
   );
 }
 
