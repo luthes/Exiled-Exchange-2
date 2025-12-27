@@ -898,3 +898,33 @@ FracturedItemNoModMarked.runeSockets = {
   normal: 2,
 };
 // #endregion
+
+// #region RequiresOneAttribute
+export const RequiresOneAttribute = new TestItem(`Item Class: Boots
+Rarity: Rare
+Dunerunner Sandals
+--------
+Energy Shield: 58
+--------
+Requires: 78 (unmet) Intelligence
+--------
+Item Level: 68
+--------
+Unidentified
+`);
+
+RequiresOneAttribute.category = ItemCategory.Boots;
+RequiresOneAttribute.rarity = ItemRarity.Rare;
+RequiresOneAttribute.itemLevel = 68;
+RequiresOneAttribute.armourES = 58;
+RequiresOneAttribute.requires = {
+  level: 0,
+  str: 0,
+  dex: 0,
+  int: 78,
+};
+
+RequiresOneAttribute.info.refName = "Dunerunner Sandals";
+RequiresOneAttribute.sectionCount = 5;
+RequiresOneAttribute.isUnidentified = true;
+// #endregion

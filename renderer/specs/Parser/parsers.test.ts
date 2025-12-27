@@ -9,6 +9,7 @@ import {
   NormalItem,
   RareItem,
   RareWithImplicit,
+  RequiresOneAttribute,
   TestItem,
   UniqueItem,
   WandRareItem,
@@ -50,8 +51,6 @@ describe("parseWeapon", () => {
     const parsedItem = {} as ParsedItem;
 
     const res = __testExports.parseWeapon(sections[1], parsedItem);
-
-    // console.log(sections);
 
     expect(res).toBe("SECTION_PARSED");
     expect(parsedItem.weaponPHYSICAL).toBe(MagicItem.weaponPHYSICAL);
@@ -149,6 +148,7 @@ describe("parseRequirements", () => {
     ["HighDamageRare", HighDamageRareItem],
     ["ArmourHighValueRare", ArmourHighValueRareItem],
     ["WandRare", WandRareItem],
+    ["RequiresOneAttribute", RequiresOneAttribute],
   ])(
     "%s, items parse requirements",
     async (testName: string, item: TestItem) => {
