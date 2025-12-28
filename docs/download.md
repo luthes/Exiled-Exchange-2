@@ -7,9 +7,7 @@ import { useData } from 'vitepress'
 
 const { theme } = useData()
 </script>
-<div style="background-color: #7c2d12; color: white; padding: 10px; text-align: center; font-weight: bold; border-radius: 5px;">
-  ⚠️ This is in beta for PoE2. <br/> Please be aware that there may be bugs or issues.
-</div>
+
 You can download Exiled Exchange 2 here. Any other mirrors are not known
 to the developer, downloading from them may be unsafe or malicious.
 

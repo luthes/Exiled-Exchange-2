@@ -57,3 +57,7 @@ title: Index Page
 ## W
 
 - [Widgets](/widgets)
+
+## X
+
+- [XP Tracker](/xp-tracker)
