@@ -141,6 +141,7 @@ import SettingsStashSearch from "../stash-search/stash-search-editor.vue";
 import SettingsStopwatch from "../stopwatch/settings-stopwatch.vue";
 import SettingsItemSearch from "../item-search/settings-item-search.vue";
 import SettingsLeveling from "../leveling/settings-leveling.vue";
+import { disableWidget, enableWidget, findWidget } from "./utils";
 
 function shuffle<T>(array: T[]): T[] {
   let currentIndex = array.length;
@@ -237,6 +238,26 @@ export default defineComponent({
         }
       },
       { deep: true },
+    );
+
+    watch(
+      // any widget that requires client log
+      () => configClone.value?.readClientLog,
+      (curr, prev) => {
+        if (curr === prev || curr === undefined) return;
+        const xpTracker = findWidget("experience-tracker", configClone.value!);
+        if (curr) {
+          // Show widgets requiring this setting
+          if (xpTracker) {
+            enableWidget(xpTracker);
+          }
+        } else {
+          // Hide widgets requiring this setting
+          if (xpTracker) {
+            disableWidget(xpTracker);
+          }
+        }
+      },
     );
 
     const menuItems = computed(() =>
