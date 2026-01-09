@@ -204,7 +204,9 @@
     "tag_explicit_veiled": "Velado",
     "tag_explicit_incursion": "Incursão",
     "tag_rune": "aprimoramento",
-    "tag_desecrated": "Profanado"
+    "tag_desecrated": "Profanado",
+    "tag_mutated": "Mutated",
+    "tag_skill": "Skill"
   },
   "online_filter": {
     "offline_toggle": "Desconectado & Online",

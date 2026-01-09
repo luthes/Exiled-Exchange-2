@@ -214,6 +214,7 @@
     "tag_sanctum": "Sanctum",
     "tag_desecrated": "profanado",
     "tag_skill": "Skill",
+    "tag_mutated": "Mutated",
     "fill_rune_iron": "Fill Runes(Iron)",
     "grade": "Grade {0}",
     "hybrid_note": "Tier may be incorrect due to the potential for a hybrid mod"

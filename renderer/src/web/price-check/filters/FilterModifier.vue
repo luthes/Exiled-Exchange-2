@@ -550,6 +550,9 @@ export default defineComponent({
 .tag-desecrated {
   @apply bg-green-900 text-green-100;
 }
+.tag-mutated {
+  @apply bg-rose-900 text-yellow-100;
+}
 </style>
 
 <style lang="postcss">

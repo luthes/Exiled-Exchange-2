@@ -226,6 +226,7 @@
     "tag_sanctum": "Святилище",
     "tag_desecrated": "Очернённый",
     "tag_skill": "Skill",
+    "tag_mutated": "Mutated",
     "fill_rune_iron": "Fill Runes(Iron)",
     "grade": "Грейд {0}",
     "hybrid_note": "Tier may be incorrect due to the potential for a hybrid mod"

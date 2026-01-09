@@ -19,7 +19,7 @@ export interface ParsedModifier {
 
 export interface ModifierInfo {
   type: ModifierType;
-  generation?: "suffix" | "prefix" | "corrupted" | "eldritch";
+  generation?: "suffix" | "prefix" | "corrupted" | "eldritch" | "mutated";
   name?: string;
   tier?: number;
   rank?: number;
@@ -87,6 +87,8 @@ export function parseModInfoLine(
       case _$.IMPLICIT_MODIFIER:
         type = ModifierType.Implicit;
         break;
+      case _$.VAAL_UNIQUE_MODIFIER:
+        generation = "mutated";
     }
 
     name = match.groups!.name || undefined;

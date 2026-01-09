@@ -353,6 +353,13 @@ export function calculatedStatToFilter(
       filter.tag = FilterTag.Synthesised;
     }
   } else if (type === ModifierType.Explicit) {
+    if (
+      item.rarity === ItemRarity.Unique &&
+      sources.some((s) => s.modifier.info.generation === "mutated")
+    ) {
+      filter.tag = FilterTag.Mutated;
+    }
+
     if (item.info.unique?.fixedStats) {
       const fixedStats = item.info.unique.fixedStats;
       if (!fixedStats.includes(filter.statRef)) {
