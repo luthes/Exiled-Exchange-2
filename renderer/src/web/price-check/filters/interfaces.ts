@@ -73,6 +73,7 @@ export interface ItemFilters {
   };
   veiled?: {
     statRefs: string[];
+    veiledCount: number;
     disabled: boolean;
   };
   areaLevel?: FilterNumeric;
