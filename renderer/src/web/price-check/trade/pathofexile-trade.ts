@@ -5,6 +5,7 @@ import {
   INTERNAL_TRADE_IDS,
   InternalTradeId,
   ItemIsElementalModifier,
+  FilterTag,
 } from "../filters/interfaces";
 import { setProperty as propSet } from "dot-prop";
 import { DateTime } from "luxon";
@@ -890,9 +891,6 @@ export function createTradeRequest(
   stats = stats.filter(
     (stat) => !INTERNAL_TRADE_IDS.includes(stat.tradeId[0] as any),
   );
-  if (filters.veiled && !filters.veiled.disabled) {
-    propSet(query.filters, "misc_filters.filters.veiled.option", String(true));
-  }
 
   // if (filters.influences) {
   //   for (const influence of filters.influences) {
@@ -941,6 +939,31 @@ export function createTradeRequest(
         filters: stat.tradeId.map((id) => tradeIdToQuery(id, stat)),
       });
     }
+  }
+
+  if (filters.veiled && !filters.veiled.disabled) {
+    propSet(query.filters, "misc_filters.filters.veiled.option", String(true));
+    const veiledCount = filters.veiled.veiledCount;
+
+    // HACK: add pseudo stat for veiled count(dont want on my ui though)
+    qAnd.filters.push(
+      tradeIdToQuery("pseudo.pseudo_number_of_unrevealed_mods", {
+        tradeId: ["pseudo.pseudo_number_of_unrevealed_mods"],
+        statRef: "# Unrevealed Modifiers",
+        text: "Unrevealed Modifiers",
+        tag: FilterTag.Pseudo,
+        sources: [],
+        roll: {
+          value: veiledCount,
+          min: veiledCount,
+          max: undefined,
+          default: { min: veiledCount, max: veiledCount },
+          dp: false,
+          isNegated: false,
+        },
+        disabled: false,
+      }),
+    );
   }
 
   return body;

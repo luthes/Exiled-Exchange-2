@@ -458,6 +458,9 @@ export function createFilters(
       statRefs: item.statsByType
         .filter((calc) => calc.type === ModifierType.Veiled)
         .map((calc) => calc.stat.ref),
+      veiledCount: item.newMods.filter(
+        (m) => m.info.type === ModifierType.Veiled,
+      ).length,
       disabled: item.rarity !== ItemRarity.Unique,
     };
 
