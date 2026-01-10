@@ -32,11 +32,11 @@ import {
   ENCHANT_LINE,
   SCOURGE_LINE,
   IMPLICIT_LINE,
-  RUNE_LINE,
+  AUGMENT_LINE,
   isModInfoLine,
   groupLinesByMod,
   parseModInfoLine,
-  ADDED_RUNE_LINE,
+  ADDED_AUGMENT_LINE,
 } from "./advanced-mod-desc";
 import { calcPropPercentile, QUALITY_STATS } from "./calc-q20";
 
@@ -86,7 +86,7 @@ const parsers: Array<ParserFn | { virtual: VirtualParserFn }> = [
   parseMap,
   parseWaystone,
   parseSockets,
-  parseRuneSockets,
+  parseAugmentSockets,
   parseHeistBlueprint,
   parseAreaLevel,
   parseAtzoatlRooms,
@@ -99,13 +99,13 @@ const parsers: Array<ParserFn | { virtual: VirtualParserFn }> = [
   parseLogbookArea,
   parseLogbookArea,
   parseModifiers, // enchant
-  parseModifiers, // rune
+  parseModifiers, // augment
   parseModifiers, // implicit
   parseModifiers, // grant skill
   parseModifiers, // explicit
-  // catch enchant and rune since they don't have curlys rn
+  // catch enchant and augments since they don't have curlys rn
   parseModifiersPoe2, // enchant
-  parseModifiersPoe2, // rune
+  parseModifiersPoe2, // augment
   // HACK: catch implicit and explicit for controllers
   parseModifiersPoe2, // implicit
   parseModifiersPoe2, // grant skill
@@ -113,7 +113,7 @@ const parsers: Array<ParserFn | { virtual: VirtualParserFn }> = [
   { virtual: transformToLegacyModifiers },
   { virtual: parseFractured },
   { virtual: parseBlightedMap },
-  { virtual: applyRuneSockets },
+  { virtual: applyAugmentSockets },
   { virtual: applyElementalAdded },
   { virtual: pickCorrectVariant },
   { virtual: calcBasePercentile },
@@ -698,8 +698,8 @@ function parseStackSize(section: string[], item: ParsedItem) {
   return "SECTION_SKIPPED";
 }
 
-function parseRuneSockets(section: string[], item: ParsedItem) {
-  performance.mark("parseRuneSockets");
+function parseAugmentSockets(section: string[], item: ParsedItem) {
+  performance.mark("parseAugmentSockets");
   const categoryMax = getMaxSockets(item);
   const armourOrWeapon =
     categoryMax &&
@@ -710,13 +710,13 @@ function parseRuneSockets(section: string[], item: ParsedItem) {
     const sockets = section[0].slice(_$.SOCKETS.length).trimEnd();
     const current = sockets.split("S").length - 1;
     if (!itemIsModifiable(item)) {
-      item.runeSockets = {
+      item.augmentSockets = {
         empty: 0,
         current,
         normal: categoryMax,
       };
     } else {
-      item.runeSockets = {
+      item.augmentSockets = {
         empty: 0,
         current,
         normal: categoryMax,
@@ -726,7 +726,7 @@ function parseRuneSockets(section: string[], item: ParsedItem) {
     return "SECTION_PARSED";
   }
   if (categoryMax && itemIsModifiable(item)) {
-    item.runeSockets = {
+    item.augmentSockets = {
       empty: categoryMax,
       current: 0,
       normal: categoryMax,
@@ -1024,8 +1024,8 @@ export function parseModifiersPoe2(section: string[], item: ParsedItem) {
     (line) =>
       line.endsWith(ENCHANT_LINE) ||
       line.endsWith(SCOURGE_LINE) ||
-      line.endsWith(RUNE_LINE) ||
-      line.endsWith(ADDED_RUNE_LINE) ||
+      line.endsWith(AUGMENT_LINE) ||
+      line.endsWith(ADDED_AUGMENT_LINE) ||
       line.startsWith(_$.GRANTS_SKILL),
   );
 
@@ -1037,10 +1037,10 @@ export function parseModifiersPoe2(section: string[], item: ParsedItem) {
       modType = ModifierType.Enchant;
     } else if (hasEndingTag.endsWith(SCOURGE_LINE)) {
       modType = ModifierType.Scourge;
-    } else if (hasEndingTag.endsWith(ADDED_RUNE_LINE)) {
-      modType = ModifierType.AddedRune;
-    } else if (hasEndingTag.endsWith(RUNE_LINE)) {
-      modType = ModifierType.Rune;
+    } else if (hasEndingTag.endsWith(ADDED_AUGMENT_LINE)) {
+      modType = ModifierType.AddedAugment;
+    } else if (hasEndingTag.endsWith(AUGMENT_LINE)) {
+      modType = ModifierType.Augment;
     } else if (hasEndingTag.startsWith(_$.GRANTS_SKILL)) {
       modType = ModifierType.Skill;
     } else {
@@ -1090,7 +1090,7 @@ function parseModifiers(section: string[], item: ParsedItem) {
   const recognizedLine = section.find(
     (line) =>
       line.endsWith(ENCHANT_LINE) ||
-      line.endsWith(RUNE_LINE) ||
+      line.endsWith(AUGMENT_LINE) ||
       line.startsWith(_$.GRANTS_SKILL) ||
       isModInfoLine(line),
   );
@@ -1123,7 +1123,7 @@ function parseModifiers(section: string[], item: ParsedItem) {
         ? ModifierType.Enchant
         : recognizedLine.startsWith(_$.GRANTS_SKILL)
           ? ModifierType.Skill
-          : ModifierType.Rune,
+          : ModifierType.Augment,
       tags: [],
     };
     parseStatsFromMod(lines, item, { info: modInfo, stats: [] });
@@ -1132,34 +1132,34 @@ function parseModifiers(section: string[], item: ParsedItem) {
   return "SECTION_PARSED";
 }
 
-function applyRuneSockets(item: ParsedItem) {
-  performance.mark("applyRuneSockets");
-  // If we have any rune sockets
-  if (item.runeSockets) {
-    // Count current mods that are of type Rune
+function applyAugmentSockets(item: ParsedItem) {
+  performance.mark("applyAugmentSockets");
+  // If we have any augment sockets
+  if (item.augmentSockets) {
+    // Count current mods that are of type Augment
 
-    const runeMods = item.newMods.filter(
-      (mod) => mod.info.type === ModifierType.Rune,
+    const augmentMods = item.newMods.filter(
+      (mod) => mod.info.type === ModifierType.Augment,
     );
-    const runeStats = item.statsByType.filter(
-      (calc) => calc.type === ModifierType.Rune,
+    const augmentStats = item.statsByType.filter(
+      (calc) => calc.type === ModifierType.Augment,
     );
-    const runes = runeMods
+    const augments = augmentMods
       .map((mod) => {
-        const stat = runeStats.find(
+        const stat = augmentStats.find(
           (stat) => stat.sources[0].stat === mod.stats[0],
         );
         if (!stat) return [];
-        return runeCount(mod, stat);
+        return augmentCount(mod, stat);
       })
       .flat();
 
-    // HACK: fix since I can't detect how many exist due to rune tiers
-    const tempFix = runes.reduce((x, y) => x + y, 0) > 0;
+    // HACK: fix since I can't detect how many exist due to augment tiers
+    const tempFix = augments.reduce((x, y) => x + y, 0) > 0;
     const potentialEmptySockets = tempFix
       ? 0
-      : Math.max(item.runeSockets.normal, item.runeSockets.current);
-    item.runeSockets.empty = potentialEmptySockets;
+      : Math.max(item.augmentSockets.normal, item.augmentSockets.current);
+    item.augmentSockets.empty = potentialEmptySockets;
   }
 }
 
@@ -1785,16 +1785,16 @@ export function isArmourOrWeaponOrCaster(
   }
 }
 
-function runeCount(mod: ParsedModifier, statCalc: StatCalculated): number {
-  if (mod.info.type !== ModifierType.Rune) return 0;
-  // HACK: fix since I can't detect how many exist due to rune tiers
-  // const runeTradeId = statCalc.stat.trade.ids[ModifierType.Rune][0];
-  // const runeSingle = RUNE_SINGLE_VALUE[runeTradeId];
+function augmentCount(mod: ParsedModifier, statCalc: StatCalculated): number {
+  if (mod.info.type !== ModifierType.Augment) return 0;
+  // HACK: fix since I can't detect how many exist due to augment tiers
+  // const augmentTradeId = statCalc.stat.trade.ids[ModifierType.Augment][0];
+  // const augmentSingle = AUGMENT_SINGLE_VALUE[augmentTradeId];
 
-  // // Calculate how many of this rune are in the item
-  // const runeAppliedValue = statCalc.sources[0].contributes!.value;
-  // const runeSingleValue = runeSingle.values[0];
-  // const totalRunes = Math.floor(runeAppliedValue / runeSingleValue);
+  // // Calculate how many of this augment are in the item
+  // const augmentAppliedValue = statCalc.sources[0].contributes!.value;
+  // const augmentSingleValue = augmentSingle.values[0];
+  // const totalAugments = Math.floor(augmentAppliedValue / augmentSingleValue);
 
   return 1;
 }

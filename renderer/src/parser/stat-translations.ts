@@ -20,7 +20,7 @@ export interface ParsedStat {
     max: number;
     option?: number;
   };
-  fromAddedRune?: BaseType;
+  fromAddedAugment?: BaseType;
 }
 
 interface StatString {
@@ -163,7 +163,7 @@ export function tryParseTranslation(
   for (const combination of _statPlaceholderGenerator(stat.string)) {
     const found = STAT_BY_MATCH_STR(combination.stat);
     const realType =
-      modType === ModifierType.AddedRune ? ModifierType.Rune : modType;
+      modType === ModifierType.AddedAugment ? ModifierType.Augment : modType;
     if (!found || !found.stat.trade.ids || !found.stat.trade.ids[realType]) {
       continue;
     }

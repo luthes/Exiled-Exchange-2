@@ -21,7 +21,7 @@ export function createPresets(
     searchStatRange: number;
     useEn: boolean;
     defaultAllSelected: boolean;
-    autoFillEmptyRuneSockets: PriceCheckWidget["autoFillEmptyRuneSockets"];
+    autoFillEmptyAugmentSockets: PriceCheckWidget["autoFillEmptyRuneSockets"];
   },
 ): { presets: FilterPreset[]; active: string } {
   if (item.info.refName === "Expedition Logbook") {
@@ -70,18 +70,18 @@ export function createPresets(
     stats: initUiModFilters(item, opts),
   };
 
-  // Apply runes if we should
+  // Apply augments if we should
   // if (
   //   (item.rarity === ItemRarity.Magic || item.rarity === ItemRarity.Rare) &&
   //   pseudoPreset.filters.itemEditorSelection &&
   //   !pseudoPreset.filters.itemEditorSelection.disabled &&
-  //   opts.autoFillEmptyRuneSockets
+  //   opts.autoFillEmptyAugmentSockets
   // ) {
   //   handleApplyItemEdits(
   //     pseudoPreset.stats,
   //     item,
-  //     pseudoPreset.filters.tempRuneStorage ?? [],
-  //     opts.autoFillEmptyRuneSockets ?? "None",
+  //     pseudoPreset.filters.tempAugmentStorage ?? [],
+  //     opts.autoFillEmptyAugmentSockets ?? "None",
   //   );
   // }
 

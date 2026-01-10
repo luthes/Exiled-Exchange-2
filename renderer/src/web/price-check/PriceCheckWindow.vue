@@ -182,9 +182,9 @@ import {
 import ItemEditor from "./filters/ItemEditor.vue";
 import {
   BaseType,
-  HIGH_VALUE_RUNES_HARDCODED,
+  HIGH_VALUE_AUGMENTS_HARDCODED,
   loadUltraLateItems,
-  setLocalRuneFilter,
+  setLocalAugmentFilter,
 } from "@/assets/data";
 import { translatedEffectsPseudos } from "./filters/pseudo";
 import { ItemEditorType } from "@/parser/meta";
@@ -260,12 +260,12 @@ export default defineComponent({
       // FIXME: check if this is working as intended
       () => leagueId.value,
       () => {
-        const runeFilter = (item: BaseType) =>
-          Object.values(item.rune!).some((runeStat) =>
-            translatedEffectsPseudos(runeStat.string),
-          ) || HIGH_VALUE_RUNES_HARDCODED.has(item.refName);
-        setLocalRuneFilter(runeFilter);
-        loadUltraLateItems(runeFilter);
+        const augmentFilter = (item: BaseType) =>
+          Object.values(item.augment!).some((augmentStat) =>
+            translatedEffectsPseudos(augmentStat.string),
+          ) || HIGH_VALUE_AUGMENTS_HARDCODED.has(item.refName);
+        setLocalAugmentFilter(augmentFilter);
+        loadUltraLateItems(augmentFilter);
       },
       { immediate: true },
     );

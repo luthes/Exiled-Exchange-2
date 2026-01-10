@@ -56,7 +56,7 @@ export function getItemEditorType(item: ParsedItem): ItemEditorType {
     item.rarity &&
     item.rarity !== ItemRarity.Unique
   ) {
-    return ItemEditorType.Rune;
+    return ItemEditorType.Augment;
   } else {
     return ItemEditorType.None;
   }

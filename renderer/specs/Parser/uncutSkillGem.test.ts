@@ -75,7 +75,7 @@ describe("Create Filter for uncut gems", () => {
       activateStockFilter: true,
       exact: true,
       useEn: true,
-      autoFillEmptyRuneSockets: false as const,
+      autoFillEmptyAugmentSockets: false as const,
     };
 
     const result = createFilters(gem, opts);

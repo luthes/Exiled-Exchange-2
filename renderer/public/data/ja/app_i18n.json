@@ -67,7 +67,7 @@
     "quality": "品質: {0}",
     "gem_level": "レベル: {0}",
     "gem_sockets": "ソケット: {0}",
-    "rune_sockets": "ソケット: {0}",
+    "augment_sockets": "ソケット: {0}",
     "sentinel_charge": "チャージ: {0}",
     "find_in_stash": "スタッシュで見つける",
     "find_same_price": "Filter by",

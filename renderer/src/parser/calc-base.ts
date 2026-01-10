@@ -60,7 +60,11 @@ export function recalculateItemProperties(
   }
 }
 
-export function applyEleRune(item: ParsedItem, type: string, values: number[]) {
+export function applyEleAugment(
+  item: ParsedItem,
+  type: string,
+  values: number[],
+) {
   const { category } = item;
   const weaponOrArmour = isArmourOrWeaponOrCaster(category);
   if (

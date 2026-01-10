@@ -35,15 +35,15 @@
         </button>
         <div class="flex items-baseline gap-x-1">
           <div
-            v-if="showRuneNotice"
+            v-if="showAugmentNotice"
             :class="$style['qualityLabel']"
             class="self-center"
           >
             <img
               :src="
-                showRuneNotice === '%NOT_FOUND%'
+                showAugmentNotice === '%NOT_FOUND%'
                   ? '/images/404.png'
-                  : showRuneNotice
+                  : showAugmentNotice
               "
               class="min-w-5 min-h-5 w-5 h-5"
             />
@@ -204,7 +204,7 @@ export default defineComponent({
         ),
     );
 
-    const showRuneNotice = computed(() => {
+    const showAugmentNotice = computed(() => {
       if (props.filter.editorAdded) {
         return props.filter.editorAdded.icon;
       }
@@ -291,7 +291,7 @@ export default defineComponent({
     return {
       t,
       showTag,
-      showRuneNotice,
+      showAugmentNotice,
       showQ20Notice,
       calcQuality,
       inputMinEl,

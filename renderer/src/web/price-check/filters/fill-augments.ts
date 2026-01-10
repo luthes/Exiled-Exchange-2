@@ -1,7 +1,7 @@
 import { ItemCategory, ItemRarity, ParsedItem } from "@/parser";
 import { StatFilter } from "./interfaces";
-import { applyEleRune, recalculateItemProperties } from "@/parser/calc-base";
-import { BaseType, ITEM_BY_REF, RUNE_DATA_BY_RUNE } from "@/assets/data";
+import { applyEleAugment, recalculateItemProperties } from "@/parser/calc-base";
+import { BaseType, ITEM_BY_REF, AUGMENT_DATA_BY_AUGMENT } from "@/assets/data";
 import { parseModifiersPoe2, replaceHashWithValues } from "@/parser/Parser";
 import { ModifierType, sumStatsByModType } from "@/parser/modifiers";
 import {
@@ -12,7 +12,7 @@ import {
 import { AppConfig } from "@/web/Config";
 import { PriceCheckWidget } from "@/web/overlay/widgets";
 import { filterItemProp } from "./pseudo/item-property";
-import { ADDED_RUNE_LINE } from "@/parser/advanced-mod-desc";
+import { ADDED_AUGMENT_LINE } from "@/parser/advanced-mod-desc";
 import { filterPseudo } from "./pseudo";
 import { ItemEditorType } from "@/parser/meta";
 
@@ -72,20 +72,20 @@ export function handleRemoveItemEdits(
 
 function createNewStatFilter(
   item: ParsedItem,
-  newRune: string,
+  newAugment: string,
 ): StatFilter[] | undefined {
   if (!item.category) return;
   const newItem = JSON.parse(JSON.stringify(item)) as ParsedItem;
-  const runeData = RUNE_DATA_BY_RUNE[newRune].find((rune) =>
+  const augmentData = AUGMENT_DATA_BY_AUGMENT[newAugment].find((rune) =>
     rune.categories.includes(item.category!),
   );
-  if (!runeData) return;
-  const runeItem = ITEM_BY_REF("ITEM", runeData.refName)![0];
+  if (!augmentData) return;
+  const runeItem = ITEM_BY_REF("ITEM", augmentData.refName)![0];
 
-  const emptyRuneCount = item.runeSockets!.empty;
+  const emptyAugmentCount = item.augmentSockets!.empty;
   const statString = replaceHashWithValues(
-    runeData.baseStat + ADDED_RUNE_LINE,
-    runeData.values.map((v) => v * emptyRuneCount),
+    `${augmentData.baseStat}${ADDED_AUGMENT_LINE}`,
+    augmentData.values.map((v) => v * emptyAugmentCount),
   );
   parseModifiersPoe2([statString], newItem);
   newItem.statsByType = sumStatsByModType(newItem.newMods);
@@ -111,7 +111,7 @@ function createNewStatFilter(
     runeItem.refName.includes("Storm Rune") ||
     runeItem.refName.includes("Desert Rune")
   ) {
-    applyEleRune(newItem, runeItem.refName, runeData.values);
+    applyEleAugment(newItem, runeItem.refName, augmentData.values);
   }
 
   recalculateItemProperties(newItem, item);
@@ -139,7 +139,7 @@ function createNewStatFilter(
   ctx.filters = ctx.filters.map((filter) => {
     if (
       filter.sources.some(
-        (source) => source.modifier.info.type === ModifierType.AddedRune,
+        (source) => source.modifier.info.type === ModifierType.AddedAugment,
       )
     ) {
       filter.editorAdded = runeItem;
@@ -149,16 +149,16 @@ function createNewStatFilter(
   return ctx.filters;
 }
 
-export function selectRuneEffectByItemCategory(
+export function selectAugmentEffectByItemCategory(
   category: ItemCategory,
-  rune: BaseType["rune"],
+  rune: BaseType["augment"],
 ) {
   if (!rune) return;
 
   return rune.find((rune) => rune.categories.includes(category));
 }
 
-export function getRuneNameByRef(ref: string) {
+export function getAugmentNameByRef(ref: string) {
   const rune = ITEM_BY_REF("ITEM", ref);
   if (!rune) return "error";
   return rune[0].name;

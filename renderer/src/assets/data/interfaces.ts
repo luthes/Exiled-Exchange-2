@@ -96,7 +96,7 @@ export interface BaseType {
     ev?: [min: number, max: number];
     es?: [min: number, max: number];
   };
-  rune?: Array<{
+  augment?: Array<{
     categories: ItemCategory[];
     string: string;
     values: number[];
@@ -266,9 +266,9 @@ export interface ItemCategoryToEmptyPrefix {
   };
 }
 
-export interface RuneSingleValue {
+export interface AugmentSingleValue {
   [id: string]: {
-    rune: string;
+    augment: string;
     baseStat: string;
     values: number[];
     id: string;
@@ -276,8 +276,8 @@ export interface RuneSingleValue {
   };
 }
 
-export interface RuneData {
-  rune: string;
+export interface AugmentData {
+  augment: string;
   refName: string;
   baseStat: string;
   values: number[];
@@ -286,16 +286,16 @@ export interface RuneData {
   icon: string;
 }
 /**
- * Key for each rune, Iron, Lesser Rebirth, Soul core of xx
+ * Key for each augment, Iron, Lesser Rebirth, Soul core of xx
  *
  * Value is each option that the value could be for, ie stat for armour or weapon.
  */
-export interface RuneDataByRune {
-  [rune: string]: RuneData[];
+export interface AugmentDataByAugment {
+  [augment: string]: AugmentData[];
 }
-export interface RuneDataByTradeId {
+export interface AugmentDataByTradeId {
   [tradeId: string]: Array<{
-    rune: string;
+    augment: string;
     baseStat: string;
     values: number[];
     id: string;

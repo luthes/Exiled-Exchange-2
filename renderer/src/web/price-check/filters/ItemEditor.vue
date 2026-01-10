@@ -41,10 +41,10 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from "vue";
 import { ParsedItem } from "@/parser";
-import { HIGH_VALUE_RUNES_HARDCODED, RUNE_LIST } from "@/assets/data";
+import { HIGH_VALUE_AUGMENTS_HARDCODED, AUGMENT_LIST } from "@/assets/data";
 import ItemEditorButton from "./ItemEditorButton.vue";
 import { useI18n } from "vue-i18n";
-import { selectRuneEffectByItemCategory } from "./fill-runes";
+import { selectAugmentEffectByItemCategory } from "./fill-augments";
 import { replaceHashWithValues } from "@/parser/Parser";
 import { translatedEffectsPseudos } from "./pseudo";
 import { ItemEditorType } from "@/parser/meta";
@@ -96,37 +96,40 @@ export default defineComponent({
 
       const category = props.item.category;
       if (!category) return items;
-      if (getItemEditorType(props.item) === ItemEditorType.Rune) {
-        for (const rune of RUNE_LIST) {
+      if (getItemEditorType(props.item) === ItemEditorType.Augment) {
+        for (const augment of AUGMENT_LIST) {
           let stat = "";
           if (props.item.category) {
-            const runeEffect = selectRuneEffectByItemCategory(
+            const augmentEffect = selectAugmentEffectByItemCategory(
               props.item.category,
-              rune.rune,
+              augment.augment,
             );
 
             if (
-              !runeEffect ||
+              !augmentEffect ||
               !(
-                translatedEffectsPseudos(runeEffect.string) ||
-                HIGH_VALUE_RUNES_HARDCODED.has(rune.refName)
+                translatedEffectsPseudos(augmentEffect.string) ||
+                HIGH_VALUE_AUGMENTS_HARDCODED.has(augment.refName)
               )
             )
               continue;
 
-            stat = replaceHashWithValues(runeEffect.string, runeEffect.values);
+            stat = replaceHashWithValues(
+              augmentEffect.string,
+              augmentEffect.values,
+            );
           }
           items.push({
-            name: rune.name,
-            refName: rune.refName,
-            icon: rune.icon,
+            name: augment.name,
+            refName: augment.refName,
+            icon: augment.icon,
             displayString: stat,
           });
         }
 
         items.sort((a, b) => {
           const rank = (s: string) =>
-            s.includes(" Rune")
+            s.includes(" Augment")
               ? 0
               : s.includes("Soul Core of")
                 ? 1

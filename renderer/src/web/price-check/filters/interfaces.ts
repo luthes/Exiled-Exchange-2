@@ -37,7 +37,7 @@ export interface ItemFilters {
   socketNumber?: FilterNumeric;
   linkedSockets?: FilterNumeric;
   whiteSockets?: FilterNumeric;
-  runeSockets?: FilterNumeric;
+  augmentSockets?: FilterNumeric;
   itemEditorSelection?: { disabled: boolean; editing: boolean; value: string };
   corrupted?: {
     value: boolean;
@@ -88,7 +88,7 @@ export interface ItemFilters {
     league: string;
     collapseListings: "api" | "app";
   };
-  tempRuneStorage?: StatFilter[];
+  tempAugmentStorage?: StatFilter[];
   requires?: {
     level?: FilterNumeric;
     str?: FilterNumeric;
@@ -207,8 +207,8 @@ export enum FilterTag {
   Delve = "explicit-delve",
   Unveiled = "explicit-veiled",
   Incursion = "explicit-incursion",
-  Rune = "rune",
-  AddedRune = "added-rune",
+  Augment = "rune",
+  AddedAugment = "added-rune",
   Desecrated = "desecrated",
   Skill = "skill",
   Mutated = "mutated",

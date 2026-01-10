@@ -33,7 +33,7 @@ export class TestItem implements ParsedItem {
   areaLevel?: number | undefined;
   talismanTier?: number | undefined;
   quality?: number | undefined;
-  runeSockets?:
+  augmentSockets?:
     | {
         empty: number;
         current: number;
@@ -446,7 +446,7 @@ HighDamageRareItem.requires = {
   int: 0,
 };
 
-HighDamageRareItem.runeSockets = {
+HighDamageRareItem.augmentSockets = {
   empty: 0,
   current: 2,
   normal: 2,
@@ -503,7 +503,7 @@ ArmourHighValueRareItem.sectionCount = 8;
 ArmourHighValueRareItem.prefixCount = 3;
 ArmourHighValueRareItem.suffixCount = 3;
 
-ArmourHighValueRareItem.runeSockets = {
+ArmourHighValueRareItem.augmentSockets = {
   empty: 0,
   current: 3,
   normal: 2,
@@ -821,7 +821,7 @@ FracturedItem.prefixCount = 3;
 FracturedItem.suffixCount = 3;
 FracturedItem.implicitCount = 1;
 FracturedItem.sectionCount = 9;
-FracturedItem.runeSockets = {
+FracturedItem.augmentSockets = {
   empty: 0,
   current: 2,
   normal: 2,
@@ -892,7 +892,7 @@ FracturedItemNoModMarked.prefixCount = 3;
 FracturedItemNoModMarked.suffixCount = 3;
 FracturedItemNoModMarked.implicitCount = 1;
 FracturedItemNoModMarked.sectionCount = 9;
-FracturedItemNoModMarked.runeSockets = {
+FracturedItemNoModMarked.augmentSockets = {
   empty: 0,
   current: 2,
   normal: 2,

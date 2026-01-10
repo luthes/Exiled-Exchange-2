@@ -180,7 +180,7 @@ export default defineComponent({
               ? prevCurrency
               : undefined,
           defaultAllSelected: widget.value.defaultAllSelected,
-          autoFillEmptyRuneSockets: widget.value.autoFillEmptyRuneSockets,
+          autoFillEmptyAugmentSockets: widget.value.autoFillEmptyRuneSockets,
         });
 
         if (

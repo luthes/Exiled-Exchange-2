@@ -188,7 +188,7 @@ interface TradeRequest {
           ev?: FilterRange;
           // Physical Damage per Second
           pdps?: FilterRange;
-          // Rune Slots
+          // Augment Slots (still called rune on trade site)
           rune_sockets?: FilterRange;
           // Spirit
           spirit?: FilterRange;
@@ -456,11 +456,11 @@ export function createTradeRequest(
 
   // EQUIPMENT FILTERS
 
-  if (filters.runeSockets && !filters.runeSockets.disabled) {
+  if (filters.augmentSockets && !filters.augmentSockets.disabled) {
     propSet(
       query.filters,
       "equipment_filters.filters.rune_sockets.min",
-      filters.runeSockets.value,
+      filters.augmentSockets.value,
     );
   }
 

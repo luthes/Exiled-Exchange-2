@@ -122,7 +122,7 @@ export const ACCESSORY = new Set([
 ]);
 
 export enum ItemEditorType {
-  Rune = "rune",
+  Augment = "augment",
   Catalyst = "catalyst",
   None = "none",
 }

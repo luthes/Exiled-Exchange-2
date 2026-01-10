@@ -44,8 +44,8 @@ export function hasCraftingValue(item: ParsedItem) {
       // High ilvl (minus 15, seems like low ilevel ones still kinda sell?)
       item.itemLevel! >= maxUsefulItemLevel(item.category) - 15 ||
       // is exceptional item
-      (item.runeSockets &&
-        item.runeSockets.current > item.runeSockets.normal) ||
+      (item.augmentSockets &&
+        item.augmentSockets.current > item.augmentSockets.normal) ||
       (item.quality && item.quality > 20))
   );
 }

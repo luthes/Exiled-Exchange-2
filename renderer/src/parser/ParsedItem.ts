@@ -19,10 +19,10 @@ export enum ItemInfluence {
   Warlord = "Warlord",
 }
 
-// export interface Rune {
+// export interface Augment {
 //   index: number;
 //   isEmpty: boolean;
-//   rune?: string;
+//   augment?: string;
 //   text?: string; // Text of modifier
 //   isFake?: boolean;
 //   modifier?: ParsedModifier; // @deprecated
@@ -59,7 +59,7 @@ export interface ParsedItem {
   areaLevel?: number;
   talismanTier?: number;
   quality?: number;
-  runeSockets?: {
+  augmentSockets?: {
     empty: number;
     current: number;
     normal: number;

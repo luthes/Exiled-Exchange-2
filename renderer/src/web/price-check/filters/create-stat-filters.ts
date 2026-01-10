@@ -206,7 +206,7 @@ export function initUiModFilters(
 
   if (item.info.refName !== "Split Personality") {
     filterItemProp(ctx);
-    // TODO: see if there are other options here, don't want to include trade site uniques with random runes
+    // TODO: see if there are other options here, don't want to include trade site uniques with random augments
     if (item.rarity !== ItemRarity.Unique || !getMaxSockets(item)) {
       filterPseudo(ctx);
     }
@@ -314,7 +314,7 @@ export function calculatedStatToFilter(
     filter = {
       tradeId:
         stat.trade.ids[
-          type === ModifierType.AddedRune ? ModifierType.Rune : type
+          type === ModifierType.AddedAugment ? ModifierType.Augment : type
         ],
       statRef: stat.ref,
       text:
@@ -335,7 +335,7 @@ export function calculatedStatToFilter(
   filter ??= {
     tradeId:
       stat.trade.ids[
-        type === ModifierType.AddedRune ? ModifierType.Rune : type
+        type === ModifierType.AddedAugment ? ModifierType.Augment : type
       ],
     statRef: stat.ref,
     text: translation.string,
@@ -589,7 +589,7 @@ export function finalFilterTweaks(ctx: FiltersCreationContext) {
     item.info.refName !== "Morior Invictus" &&
     item.info.refName !== "Darkness Enthroned"
   ) {
-    hideAllRunes(ctx.filters);
+    hideAllAugments(ctx.filters);
   }
 
   const hasEmptyModifier = showHasEmptyModifier(ctx);
@@ -732,9 +732,12 @@ function applyFlaskRules(filters: StatFilter[]) {
   }
 }
 
-function hideAllRunes(filters: StatFilter[]) {
+function hideAllAugments(filters: StatFilter[]) {
   for (const filter of filters) {
-    if (filter.tag === FilterTag.Rune || filter.tag === FilterTag.AddedRune) {
+    if (
+      filter.tag === FilterTag.Augment ||
+      filter.tag === FilterTag.AddedAugment
+    ) {
       filter.hidden = "filters.hide_const_roll";
       filter.disabled = true;
     }

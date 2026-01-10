@@ -114,8 +114,8 @@ const PSEUDO_RULES: PseudoRule[] = [
     mutate(filter) {
       if (
         filter.sources.length === 1 &&
-        (filter.sources[0].modifier.info.type === ModifierType.Rune ||
-          filter.sources[0].modifier.info.type === ModifierType.AddedRune)
+        (filter.sources[0].modifier.info.type === ModifierType.Augment ||
+          filter.sources[0].modifier.info.type === ModifierType.AddedAugment)
       ) {
         filter.hidden = "filters.hide_crafted_chaos";
       } else {
@@ -497,7 +497,7 @@ export function translatedEffectsPseudos(translated: string): boolean {
   // get the ref from the translated string
   const stat = tryParseTranslation(
     { string: translated, unscalable: false },
-    ModifierType.Rune,
+    ModifierType.Augment,
   );
   if (!stat) return false;
   const ref = stat.stat.ref;

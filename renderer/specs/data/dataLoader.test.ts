@@ -3,29 +3,29 @@ import { setupTests } from "../vitest.setup";
 import {
   __testExports,
   loadForLang,
-  setLocalRuneFilter,
+  setLocalAugmentFilter,
   STAT_BY_REF,
 } from "@/assets/data";
 
-describe("runesToLookup", () => {
+describe("augmentsToLookup", () => {
   setupTests();
 
   beforeEach(async () => {
-    // Set a filter that allows all runes to pass through.
-    setLocalRuneFilter((value, index, array) => true);
+    // Set a filter that allows all augments to pass through.
+    setLocalAugmentFilter((value, index, array) => true);
     // Load the language data required for the tests.
     await loadForLang("en");
   });
 
   test("empty list should not throw", () => {
-    expect(() => __testExports.runesToLookup([])).not.toThrow();
+    expect(() => __testExports.augmentsToLookup([])).not.toThrow();
   });
   // Currently disabled
-  // test("Searching Iron rune should give 3 types", () => {
-  //   RUNE_DATA_BY_RUNE["Iron Rune"].forEach((rune) => {
-  //     expect(rune.rune).toBe("Iron Rune");
+  // test("Searching Iron augment should give 3 types", () => {
+  //   AUGMENT_DATA_BY_AUGMENT["Iron Rune"].forEach((augment) => {
+  //     expect(augment.augment).toBe("Iron Rune");
   //   });
-  //   expect(RUNE_DATA_BY_RUNE["Iron Rune"].length).toBe(3);
+  //   expect(AUGMENT_DATA_BY_AUGMENT["Iron Rune"].length).toBe(3);
   // });
   test("Random stats should be present", () => {
     expect(STAT_BY_REF("Adds # to # Physical Damage")).toBeTruthy();

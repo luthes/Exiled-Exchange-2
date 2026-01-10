@@ -143,9 +143,11 @@
       >
         <!-- This is true since it will be assigned to "disabled" in the code -->
         <option :value="false">No</option>
-        <option value="Iron Rune">{{ getRuneNameByRef("Iron Rune") }}</option>
+        <option value="Iron Rune">
+          {{ getAugmentNameByRef("Iron Rune") }}
+        </option>
       </select>
-      Automatically fill empty rune sockets
+      Automatically fill empty augment sockets
     </div>
     <ui-checkbox class="mb-4" v-model="openItemEditorAbove">{{
       t(":open_editor_above")
@@ -233,7 +235,7 @@ import UiErrorBox from "@/web/ui/UiErrorBox.vue";
 import { configModelValue, configProp, findWidget } from "../settings/utils.js";
 import type { PriceCheckWidget } from "@/web/overlay/interfaces";
 import { useLeagues } from "../background/Leagues";
-import { getRuneNameByRef } from "./filters/fill-runes.js";
+import { getAugmentNameByRef } from "./filters/fill-augments.js";
 import { usePoeninja } from "../background/Prices.js";
 import UiItemImg from "../ui/UiItemImg.vue";
 
@@ -353,7 +355,7 @@ export default defineComponent({
         () => configWidget.value,
         "openItemEditorAbove",
       ),
-      getRuneNameByRef,
+      getAugmentNameByRef,
     };
   },
 });

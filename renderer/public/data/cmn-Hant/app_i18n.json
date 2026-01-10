@@ -67,7 +67,7 @@
     "quality": "品質：{0}",
     "gem_level": "等級：{0}",
     "gem_sockets": "插槽：{0}",
-    "rune_sockets": "插槽：{0}",
+    "augment_sockets": "插槽：{0}",
     "sentinel_charge": "充能：{0}",
     "find_in_stash": "在倉庫中尋找",
     "find_same_price": "Filter by",
