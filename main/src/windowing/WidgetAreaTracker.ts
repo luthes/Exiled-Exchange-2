@@ -119,5 +119,9 @@ function scaleNumberByDisplay(
   nativeValue: number,
   scaleFactor: number,
 ) {
-  return (value - boundValue + nativeValue) * scaleFactor;
+  // Convert from logical to physical coordinates:
+  // 1. Get position relative to display origin in logical coords
+  // 2. Scale to physical pixels
+  // 3. Add physical display origin
+  return (value - boundValue) * scaleFactor + nativeValue;
 }
