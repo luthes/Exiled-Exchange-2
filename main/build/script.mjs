@@ -11,8 +11,13 @@ const electronRunner = (() => {
       console.info('Restarting Electron process.')
 
       if (handle) handle.kill()
-      handle = child_process.spawn(electron, ['.'], {
-        stdio: 'inherit'
+      // On Linux, run with X11 mode for overlay compatibility
+      const isLinux = process.platform === 'linux'
+      const args = isLinux ? ['.', '--no-sandbox', '--ozone-platform=x11'] : ['.']
+      const env = isLinux ? { ...process.env, XDG_SESSION_TYPE: 'x11' } : process.env
+      handle = child_process.spawn(electron, args, {
+        stdio: 'inherit',
+        env
       })
     }
   }
